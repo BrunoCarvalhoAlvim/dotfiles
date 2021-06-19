@@ -114,6 +114,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 Plug 'rust-lang/rust.vim'
+Plug 'fatih/vim-go'
 
 call plug#end()
 
