@@ -17,6 +17,7 @@ set noerrorbells
 set tabstop=4 softtabstop=4
 set shiftwidth=4
 set expandtab
+set autowrite
 set smartindent
 set nowrap
 set noswapfile
@@ -25,7 +26,6 @@ set nobackup
 set undodir=~/.vim/undodir
 set undofile
 set incsearch
-set termguicolors
 set scrolloff=8
 set noshowmode
 set completeopt=menuone,noinsert,noselect
@@ -102,7 +102,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'dracula/vim'
-Plug 'gruvbox-community/gruvbox'
 Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' } " Python Mode
 Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/indentpython.vim'
@@ -115,9 +114,11 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 Plug 'rust-lang/rust.vim'
 Plug 'fatih/vim-go'
+Plug 'morhetz/gruvbox'
 
 call plug#end()
 
+"colorscheme dracula
 colorscheme gruvbox
 
 " NERDTree
