@@ -43,7 +43,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+# force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -82,6 +82,7 @@ if [ -x /usr/bin/dircolors ]; then
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
+    alias fishies='~/./fishies'
 fi
 
 # colored GCC warnings and errors
@@ -127,5 +128,92 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
 
+# Poetry
+export PATH="/home/bruno/.local/bin:$PATH"
+
+# asdf
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+
 # Starship
-eval "$(starship init bash)"
+# eval "$(starship init bash)"
+
+# --------------------------- smart prompt ---------------------------
+
+PROMPT_LONG=50
+PROMPT_MAX=95
+
+__ps1() {
+  local P='$'
+
+  if test -n "${ZSH_VERSION}"; then
+    local r='%F{red}'
+    local g='%F{black}'
+    local h='%F{blue}'
+    local u='%F{yellow}'
+    local p='%F{yellow}'
+    local w='%F{magenta}'
+    local b='%F{cyan}'
+    local x='%f'
+  else
+    local r='\[\e[31m\]'
+    local g='\[\e[90m\]'
+    local h='\[\e[34m\]'
+    local u='\[\e[33m\]'
+    local p='\[\e[33m\]'
+    local w='\[\e[35m\]'
+    local b='\[\e[36m\]'
+    local x='\[\e[0m\]'
+  fi
+
+  if test "${EUID}" == 0; then
+    P='#'
+    if test -n "${ZSH_VERSION}"; then
+      u='$F{red}'
+    else
+      u=$r
+    fi
+    p=$u
+  fi
+
+  local dir;
+  if test "$PWD" = "$HOME"; then
+    dir='~'
+  else
+    dir="${PWD##*/}"
+    if test "${dir}" = _; then
+      dir=${PWD#*${PWD%/*/_}}
+      dir=${dir#/}
+    elif test "${dir}" = work; then
+      dir=${PWD#*${PWD%/*/work}}
+      dir=${dir#/}
+    fi
+  fi
+
+  local B=$(git branch --show-current 2>/dev/null)
+  test "$dir" = "$B" && B='.'
+  local countme="$USER@$(hostname):$dir($B)\$ "
+
+  test "$B" = master -o "$B" = main && b=$r
+  test -n "$B" && B="$g($b$B$g)"
+
+  if test -n "${ZSH_VERSION}"; then
+    local short="$u%n$g@$h%m$g:$w$dir$B$p$P$x "
+    local long="$g╔ $u%n$g@%m\h$g:$w$dir$B\n$g╚ $p$P$x "
+    local double="$g╔ $u%n$g@%m\h$g:$w$dir\n$g║ $B\n$g╚ $p$P$x "
+  else
+    local short="$u\u$g@$h\h$g:$w$dir$B$p$P$x "
+    local long="$g╔ $u\u$g@$h\h$g:$w$dir$B\n$g╚ $p$P$x "
+    local double="$g╔ $u\u$g@$h\h$g:$w$dir\n$g║ $B\n$g╚ $p$P$x "
+  fi
+
+  if test ${#countme} -gt "${PROMPT_MAX}"; then
+    PS1="$double"
+  elif test ${#countme} -gt "${PROMPT_LONG}"; then
+    PS1="$long"
+  else
+    PS1="$short"
+  fi
+}
+
+PROMPT_COMMAND="__ps1"
