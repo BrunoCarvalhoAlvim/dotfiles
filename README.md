@@ -1,4 +1,7 @@
 # Repositório dos meus dotfiles e Scripts
 
-Baseado nos dotfiles do rwxrob e outros
+1.[Baseado nos dotfiles do rwxrob e outros]
+
+
+
 
