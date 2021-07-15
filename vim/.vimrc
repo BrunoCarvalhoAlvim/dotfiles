@@ -21,9 +21,9 @@ set showmode
 set tabstop=2
 
 " don't go too far
-set colorcolumn=80
-set cc=+1
-hi ColorColumn ctermbg=darkgrey guibg=darkgrey
+" set colorcolumn=80
+" set cc=+1
+" hi ColorColumn ctermbg=darkgrey guibg=darkgrey
 
 " give some space
 set scrolloff=8
@@ -220,6 +220,8 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
 
   call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-fugitive'
+  Plug 'vim-pandoc/vim-pandoc'
+  Plug 'rwxrob/vim-pandoc-syntax-simple'
   Plug 'cespare/vim-toml'
   Plug 'pangloss/vim-javascript'
   Plug 'vim-go/vim-go'

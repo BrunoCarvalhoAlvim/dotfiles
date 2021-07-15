@@ -82,7 +82,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
-    alias fishies='~/./fishies'
 fi
 
 # colored GCC warnings and errors
@@ -92,6 +91,13 @@ fi
 alias ll='ls -alF'
 alias la='ls -lha'
 alias l='ls -CF'
+alias fishies='~/./fishies'
+alias '?'=duck
+alias '??'=google
+alias x="exit"
+alias free='free -h'
+alias df='df -h'
+alias top=htop
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -117,6 +123,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
+#scripts
+export PATH=$PATH:/home/bruno/.dotfiles/scripts/
+
 # Go lang
 export PATH=$PATH:/usr/local/go/bin
 
@@ -134,9 +143,6 @@ export PATH="/home/bruno/.local/bin:$PATH"
 # asdf
 . $HOME/.asdf/asdf.sh
 . $HOME/.asdf/completions/asdf.bash
-
-# Starship
-# eval "$(starship init bash)"
 
 # --------------------------- smart prompt ---------------------------
 
@@ -157,7 +163,7 @@ __ps1() {
     local x='%f'
   else
     local r='\[\e[31m\]'
-    local g='\[\e[90m\]'
+    local g='\[\e[30m\]'
     local h='\[\e[34m\]'
     local u='\[\e[33m\]'
     local p='\[\e[33m\]'
